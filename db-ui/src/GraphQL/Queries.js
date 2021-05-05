@@ -1,11 +1,9 @@
-import {gql} from '@apollo/client'
+import { gql } from "@apollo/client";
 
-export const FIND_STATION = gql`
+export const GET_ALL_LAUNCHES = gql`
   query gg {
-  search(searchTerm: "Berlin") {
-    stations{
-      name
+    launches {
+      id
     }
   }
-}
 `;
