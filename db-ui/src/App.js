@@ -20,8 +20,6 @@ function App() {
   );
 }
 
-
-
 function GetAllLaunches() {
   const { loading, error, data } = useQuery(GET_ALL_LAUNCHES);
 
