@@ -1,19 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Task from "./Launch"
+import Launch from "./Launch"
 
 const Launches = ({ launches }) => {
-  console.log(launches);
   return (
     <>
-    {launches.launches.map((v) => {
-      return <h1>Launch: {v.id}</h1>
+    {launches.launches.map((launch) => {
+      return <Launch key={launch.id} launch={launch}/>
     })}
     </>
   );
 };
-
-Launches.propTypes= {
-  launches : PropTypes.array
-}
 
 export default Launches;
