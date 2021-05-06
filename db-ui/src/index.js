@@ -16,10 +16,12 @@ const errorLink = onError(({ graphqlErrors, networkError }) => {
   if (graphqlErrors) {
     graphqlErrors.map(({ message, location, path }) => {
       alert(`Graphql error ${message}`);
+      return " ";
     });
   }
   if (networkError) {
     alert(`Network error ${networkError.message}`);
+    return " ";
   }
 });
 
