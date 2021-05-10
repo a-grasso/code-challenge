@@ -8,14 +8,20 @@ const Header = ({
   onClickRefresh,
   onClickSuccess,
   onClickFail,
+  onClickReset,
+  onClickCurrentFail,
+  onClickCurrentSuccess,
 }) => {
   return (
     <header className="header">
       <h1> {title}</h1>
 
+      <Button text="Reset" onClick={onClickReset} />
       <Button text="Sort" onClick={onClickSort} />
-      <Button text="Success" onClick={onClickSuccess} />
-      <Button text="Fail" onClick={onClickFail} />
+      <Button text="All Successed" onClick={onClickSuccess} />
+      <Button text="Current Successed" onClick={onClickCurrentSuccess} />
+      <Button text="All Failed" onClick={onClickFail} />
+      <Button text="Current Failed" onClick={onClickCurrentFail} />
     </header>
   );
 };

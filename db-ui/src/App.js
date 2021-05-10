@@ -26,7 +26,7 @@ function App() {
       setLaunches(data.launches);
     }
   }, [loading, error]);
-  
+
   // Query GET_ALL_LAUNCHES returns duplicate
   const l = launches.filter((launch) => launch.mission_name !== "CRS-21");
 
@@ -35,21 +35,38 @@ function App() {
     setLaunches(launches.filter((launch) => launch.id !== id));
   };
 
+  // Reset Launches
+  const resetLaunches = (id) => {
+    setLaunches(launchesRAW);
+  };
+
   // Sort Launches
   const sortLaunches = () => {
     const l = launches.filter((launch) => launch).sort((a, b) => a.id - b.id);
     setLaunches(l);
   };
 
-  // Filter for successed launches
-  const filterSuccess = (id) => {
+  // Filter for all successed launches
+  const filterAllSuccess = (id) => {
     const l = launchesRAW.filter((launch) => launch.launch_success === true);
     setLaunches(l);
   };
 
-  // Filter for failed launches
-  const filterFail = (id) => {
+  // Filter for all failed launches
+  const filterAllFail = (id) => {
     const l = launchesRAW.filter((launch) => launch.launch_success === false);
+    setLaunches(l);
+  };
+
+  // Filter for current successed launches
+  const filterCurrentSuccess = (id) => {
+    const l = launches.filter((launch) => launch.launch_success === true);
+    setLaunches(l);
+  };
+
+  // Filter for current failed launches
+  const filterCurrentFail = (id) => {
+    const l = launches.filter((launch) => launch.launch_success === false);
     setLaunches(l);
   };
 
@@ -59,8 +76,11 @@ function App() {
         onClickSort={sortLaunches}
         onClickAdd={onClick}
         onClickRefresh={onClick}
-        onClickSuccess={filterSuccess}
-        onClickFail={filterFail}
+        onClickSuccess={filterAllSuccess}
+        onClickFail={filterAllFail}
+        onClickReset={resetLaunches}
+        onClickCurrentSuccess={filterCurrentSuccess}
+        onClickCurrentFail={filterCurrentFail}
       />
       {l.length > 0 ? (
         <Launches launches={l} onDelete={deleteLaunch} />
