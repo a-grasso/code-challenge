@@ -1,9 +1,11 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
+import Rocket from "./Rocket";
 
 const Launch = ({ launch, onDelete }) => {
   return (
-    <div className="launch">
+    <div
+      className={`launch ${launch.launch_success ? "remindert" : 'reminderf'}`}>
       <h3>
         Mission: {launch.id}{" "}
         <FaTimes
@@ -12,6 +14,7 @@ const Launch = ({ launch, onDelete }) => {
         />
       </h3>
       <p>Codename: {launch.mission_name}</p>
+      <Rocket rocket={launch.rocket} />
     </div>
   );
 };

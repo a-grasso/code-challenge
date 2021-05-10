@@ -1,19 +1,29 @@
 import PropTypes from "prop-types";
 import Button from "./Button";
 
-const Header = ({ title }) => {
-  const onClick = () => {
-    console.log("click");
-  };
-
+const Header = ({
+  title,
+  onClickSort,
+  onClickAdd,
+  onClickRefresh,
+  onClickSuccess,
+  onClickFail,
+}) => {
   return (
     <header className="header">
       <h1> {title}</h1>
-      <Button text="Add" onClick={onClick} />
-      <Button text="Refresh" onClick={onClick} />
+
+      <Button text="Sort" onClick={onClickSort} />
+      <Button text="Success" onClick={onClickSuccess} />
+      <Button text="Fail" onClick={onClickFail} />
     </header>
   );
 };
+
+/*
+<Button text="Add" onClick={onClickAdd} />
+<Button text="Refresh" onClick={onClickRefresh} />
+*/
 
 Header.defaultProps = {
   title: "SpaceX Launches Tracker",
@@ -22,7 +32,5 @@ Header.defaultProps = {
 Header.propTypes = {
   title: PropTypes.string.isRequired,
 };
-
-
 
 export default Header;
