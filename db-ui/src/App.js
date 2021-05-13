@@ -1,11 +1,11 @@
 import "./App.css";
-import React from "react";
-import Launches from "./Components/Launches";
-import Header from "./Components/Header";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_LAUNCHES } from "./GraphQL/Queries";
+import Header from "./Components/Header";
+import Launches from "./Components/Launches";
+import Footer from "./Components/Footer";
+import About from "./Components/About";
 
 function App() {
   const { loading, error, data } = useQuery(GET_ALL_LAUNCHES);
@@ -14,6 +14,8 @@ function App() {
       id: "Loading...",
       mission_name: "Loading...",
       rocket: { rocket_name: "Loading...", rocket_type: "Loading..." },
+      launch_site: { site_name_long: "Loading..." },
+      launch_date_utc: "Loading..."
     },
   ];
 
@@ -42,7 +44,7 @@ function App() {
 
   // Sort Launches
   const sortLaunches = () => {
-    const l = launches.filter((launch) => launch).sort((a, b) => a.id - b.id);
+    const l = launches.filter((launch) => launch).sort((a, b) => b.id - a.id);
     setLaunches(l);
   };
 
@@ -74,8 +76,6 @@ function App() {
     <div className="container">
       <Header
         onClickSort={sortLaunches}
-        onClickAdd={onClick}
-        onClickRefresh={onClick}
         onClickSuccess={filterAllSuccess}
         onClickFail={filterAllFail}
         onClickReset={resetLaunches}
@@ -87,6 +87,7 @@ function App() {
       ) : (
         "No Launches To Track :("
       )}
+      <Footer />
     </div>
   );
 }

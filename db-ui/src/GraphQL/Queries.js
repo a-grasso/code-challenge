@@ -11,6 +11,10 @@ export const GET_ALL_LAUNCHES = gql`
         rocket_type
       }
       launch_success
+      launch_site {
+        site_name_long
+      }
+      launch_date_utc
     }
   }
 `;
