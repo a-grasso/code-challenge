@@ -4,8 +4,6 @@ import Button from "./Button";
 const Header = ({
   title,
   onClickSort,
-  onClickSuccess,
-  onClickFail,
   onClickReset,
   onClickCurrentFail,
   onClickCurrentSuccess,
@@ -17,19 +15,12 @@ const Header = ({
 
       <Button text="Reset" onClick={onClickReset} />
       <Button text="Sort" onClick={onClickSort} />
-      <Button text="All Successed" onClick={onClickSuccess} />
-      <Button text="Current Successed" onClick={onClickCurrentSuccess} />
-      <Button text="All Failed" onClick={onClickFail} />
-      <Button text="Current Failed" onClick={onClickCurrentFail} />
+      <Button text="Succeeded" onClick={onClickCurrentSuccess} />
+      <Button text="Failed" onClick={onClickCurrentFail} />
       <Button text="Filter" onClick={onShowFilter} />
     </header>
   );
 };
-
-/*
-<Button text="Add" onClick={onClickAdd} />
-<Button text="Refresh" onClick={onClickRefresh} />
-*/
 
 Header.defaultProps = {
   title: "SpaceX Launches Tracker",

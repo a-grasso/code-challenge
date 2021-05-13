@@ -31,7 +31,7 @@ function App() {
     }
   }, [loading, error]);
 
-  // Query GET_ALL_LAUNCHES returns duplicate
+  // Query GET_ALL_LAUNCHES returns duplications
   const l = launches.filter((launch) => launch.mission_name !== "CRS-21");
 
   // Delete Launch
@@ -40,7 +40,7 @@ function App() {
   };
 
   // Reset Launches
-  const resetLaunches = (id) => {
+  const resetLaunches = () => {
     setLaunches(launchesRAW);
   };
 
@@ -50,32 +50,20 @@ function App() {
     setLaunches(l);
   };
 
-  // Filter for all successed launches
-  const filterSuccessAll = (id) => {
-    const l = launchesRAW.filter((launch) => launch.launch_success === true);
-    setLaunches(l);
-  };
-
-  // Filter for all failed launches
-  const filterFailAll = (id) => {
-    const l = launchesRAW.filter((launch) => launch.launch_success === false);
-    setLaunches(l);
-  };
-
   // Filter for successed launches
-  const filterSuccess = (id) => {
+  const filterSuccess = () => {
     const l = launches.filter((launch) => launch.launch_success === true);
     setLaunches(l);
   };
 
   // Filter for failed launches
-  const filterFail = (id) => {
+  const filterFail = () => {
     const l = launches.filter((launch) => launch.launch_success === false);
     setLaunches(l);
   };
 
-  // Filter for current launches on/after/before date
-  const filterByDate = (filter) => {
+  // Filter for launches on/after/before date or for site
+  const filter = (filter) => {
     const date = filter.date;
     const before = filter.before;
     const after = filter.after;
@@ -115,14 +103,12 @@ function App() {
     <div className="container">
       <Header
         onClickSort={sortLaunches}
-        onClickSuccess={filterSuccessAll}
-        onClickFail={filterFailAll}
         onClickReset={resetLaunches}
         onClickCurrentSuccess={filterSuccess}
         onClickCurrentFail={filterFail}
         onShowFilter={() => setShowFilterLaunches(!showFilterLaunches)}
       />
-      {showFilterLaunches && <FilterLaunches onFilter={filterByDate} />}
+      {showFilterLaunches && <FilterLaunches onFilter={filter} />}
       {l.length > 0 ? (
         <Launches launches={l} onDelete={deleteLaunch} />
       ) : (
