@@ -5,9 +5,11 @@ import { GET_ALL_LAUNCHES } from "./GraphQL/Queries";
 import Header from "./Components/Header";
 import Launches from "./Components/Launches";
 import Footer from "./Components/Footer";
-import About from "./Components/About";
+import FilterLaunches from "./Components/FilterLaunches";
 
 function App() {
+  const [showFilterLaunches, setShowFilterLaunches] = useState(false);
+
   const { loading, error, data } = useQuery(GET_ALL_LAUNCHES);
   const init = [
     {
@@ -15,7 +17,7 @@ function App() {
       mission_name: "Loading...",
       rocket: { rocket_name: "Loading...", rocket_type: "Loading..." },
       launch_site: { site_name_long: "Loading..." },
-      launch_date_utc: "Loading..."
+      launch_date_utc: "Loading...",
     },
   ];
 
@@ -49,39 +51,78 @@ function App() {
   };
 
   // Filter for all successed launches
-  const filterAllSuccess = (id) => {
+  const filterSuccessAll = (id) => {
     const l = launchesRAW.filter((launch) => launch.launch_success === true);
     setLaunches(l);
   };
 
   // Filter for all failed launches
-  const filterAllFail = (id) => {
+  const filterFailAll = (id) => {
     const l = launchesRAW.filter((launch) => launch.launch_success === false);
     setLaunches(l);
   };
 
-  // Filter for current successed launches
-  const filterCurrentSuccess = (id) => {
+  // Filter for successed launches
+  const filterSuccess = (id) => {
     const l = launches.filter((launch) => launch.launch_success === true);
     setLaunches(l);
   };
 
-  // Filter for current failed launches
-  const filterCurrentFail = (id) => {
+  // Filter for failed launches
+  const filterFail = (id) => {
     const l = launches.filter((launch) => launch.launch_success === false);
     setLaunches(l);
+  };
+
+  // Filter for current launches on/after/before date
+  const filterByDate = (filter) => {
+    const date = filter.date;
+    const before = filter.before;
+    const after = filter.after;
+    const site = filter.site;
+
+    let l = [];
+
+    if (site) {
+      l = launches.filter(
+        (launch) => launch.launch_site.site_name_long == site
+      );
+    }
+
+    if (date) {
+      if (before) {
+        l = l.filter((launch) => launch.launch_date_utc.split("T")[0] <= date);
+        setLaunches(l);
+        return;
+      }
+
+      if (after) {
+        l = l.filter((launch) => launch.launch_date_utc.split("T")[0] >= date);
+        setLaunches(l);
+        return;
+      }
+
+      l = l.filter((launch) => launch.launch_date_utc.split("T")[0] === date);
+      setLaunches(l);
+      return;
+    }
+
+    setLaunches(l);
+    return;
   };
 
   return (
     <div className="container">
       <Header
         onClickSort={sortLaunches}
-        onClickSuccess={filterAllSuccess}
-        onClickFail={filterAllFail}
+        onClickSuccess={filterSuccessAll}
+        onClickFail={filterFailAll}
         onClickReset={resetLaunches}
-        onClickCurrentSuccess={filterCurrentSuccess}
-        onClickCurrentFail={filterCurrentFail}
+        onClickCurrentSuccess={filterSuccess}
+        onClickCurrentFail={filterFail}
+        onShowFilter={() => setShowFilterLaunches(!showFilterLaunches)}
       />
+      {showFilterLaunches && <FilterLaunches onFilter={filterByDate} />}
       {l.length > 0 ? (
         <Launches launches={l} onDelete={deleteLaunch} />
       ) : (
@@ -91,9 +132,4 @@ function App() {
     </div>
   );
 }
-
-// Template For Button
-const onClick = () => {
-  console.log("click");
-};
 export default App;

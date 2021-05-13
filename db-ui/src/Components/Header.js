@@ -4,13 +4,12 @@ import Button from "./Button";
 const Header = ({
   title,
   onClickSort,
-  onClickAdd,
-  onClickRefresh,
   onClickSuccess,
   onClickFail,
   onClickReset,
   onClickCurrentFail,
   onClickCurrentSuccess,
+  onShowFilter,
 }) => {
   return (
     <header className="header">
@@ -22,6 +21,7 @@ const Header = ({
       <Button text="Current Successed" onClick={onClickCurrentSuccess} />
       <Button text="All Failed" onClick={onClickFail} />
       <Button text="Current Failed" onClick={onClickCurrentFail} />
+      <Button text="Filter" onClick={onShowFilter} />
     </header>
   );
 };
